@@ -1,11 +1,34 @@
-import { Cancel, Check, Close, HideImage, MoreHoriz, MoreVert, PersonAddOutlined, PersonRemoveOutlined, Report } from "@mui/icons-material";
-import { Box, Divider, IconButton, ListItemIcon, ListItemText, Menu, MenuItem, MenuList, Paper, Typography, useTheme } from "@mui/material";
+import {
+  Cancel,
+  Check,
+  Close,
+  HideImage,
+  MoreHoriz,
+  MoreVert,
+  PersonAddOutlined,
+  PersonRemoveOutlined,
+  Report,
+} from "@mui/icons-material";
 import React from "react";
+import {
+  Box,
+  Button,
+  Divider,
+  IconButton,
+  ListItemIcon,
+  ListItemText,
+  Menu,
+  MenuItem,
+  MenuList,
+  Paper,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setFriends } from "state";
-import FlexBetween from "./FlexBetween";
 import UserImage from "./UserImage";
+import FlexBetween from "./FlexBetween";
 
 const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
   const dispatch = useDispatch();
@@ -17,6 +40,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
   const { palette } = useTheme();
   const primaryLight = palette.primary.light;
   const primaryDark = palette.primary.dark;
+  const dark = palette.neutral.dark;
   const main = palette.neutral.main;
   const medium = palette.neutral.medium;
 
@@ -36,7 +60,6 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
     const data = await response.json();
     dispatch(setFriends({ friends: data }));
   };
-
 
   // FOR MENU DROP DOWN ON POST
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -77,17 +100,33 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
           </Typography>
         </Box>
       </FlexBetween>
-      <FlexBetween gap="1rem">
-        {/* <IconButton
-        onClick={() => patchFriend()}
-        sx={{ backgroundColor: primaryLight, p: "0.6rem" }}
-      >
-        {isFriend ? (
-          <PersonRemoveOutlined sx={{ color: primaryDark }} />
-        ) : (
-          <PersonAddOutlined sx={{ color: primaryDark }} />
-        )}
-      </IconButton> */}
+      <FlexBetween gap=".3rem">
+        {/* <IconButton onClick={() => patchFriend()} sx={{ p: "0.6rem" }}>
+          {isFriend ? (
+            // <PersonRemoveOutlined sx={{ color: primaryDark }} />
+            <Button
+              sx={{
+                color: palette.background.blackText,
+                backgroundColor: palette.primary.main,
+                borderRadius: "3rem",
+              }}
+            >
+              Following
+            </Button>
+          ) : (
+            // <PersonAddOutlined sx={{ color: primaryDark }} />
+            <Button
+              variant="contained"
+              sx={{
+                color: palette.background.blackText,
+                backgroundColor: palette.primary.main,
+                borderRadius: "3rem",
+              }}
+            >
+              Follow
+            </Button>
+          )}
+        </IconButton> */}
         <IconButton onClick={handleOpenUserMenu}>
           <MoreHoriz />
         </IconButton>

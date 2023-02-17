@@ -9,6 +9,7 @@ import {
   FormControl,
   useTheme,
   useMediaQuery,
+  Badge,
 } from "@mui/material";
 import {
   Search,
@@ -19,6 +20,7 @@ import {
   Help,
   Menu,
   Close,
+  MarkEmailUnread,
 } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { setMode, setLogout } from "state";
@@ -40,6 +42,9 @@ const Navbar = () => {
   const alt = theme.palette.background.alt;
 
   const fullName = `${user.firstName} ${user.lastName}`;
+
+  // FOR NOTIFICATION DROP DOWN
+  // END OF FOR NOTIFICATION DROP DOWN
 
   return (
     <FlexBetween padding="1rem 6%" backgroundColor={alt}>
@@ -76,7 +81,7 @@ const Navbar = () => {
 
       {/* DESKTOP NAV */}
       {isNonMobileScreens ? (
-        <FlexBetween gap="2rem">
+        <FlexBetween gap="1rem">
           <IconButton onClick={() => dispatch(setMode())}>
             {theme.palette.mode === "dark" ? (
               <DarkMode sx={{ fontSize: "25px" }} />
@@ -85,7 +90,26 @@ const Navbar = () => {
             )}
           </IconButton>
           {/* <Message sx={{ fontSize: "25px" }} /> */}
-          <Notifications sx={{ fontSize: "25px" }} />
+          <IconButton
+            size="large"
+            aria-label="show 4 new mails"
+            color="inherit"
+          >
+            <Badge badgeContent={4} color="error">
+              <MarkEmailUnread sx={{ fontSize: "25px" }} />
+            </Badge>
+          </IconButton>
+
+          <IconButton
+            size="large"
+            aria-label="show 17 new notifications"
+            color="inherit"
+          >
+            <Badge badgeContent={17} color="error">
+              <Notifications sx={{ fontSize: "25px" }} />
+            </Badge>
+          </IconButton>
+
           {/* <Help sx={{ fontSize: "25px" }} /> */}
           <FormControl variant="standard" value={fullName}>
             <Select

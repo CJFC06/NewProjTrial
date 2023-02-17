@@ -1,12 +1,16 @@
 import {
-  ManageAccountsOutlined,
   EditOutlined,
   LocationOnOutlined,
   WorkOutlineOutlined,
-  PersonRemoveOutlined,
-  PersonAddOutlined,
 } from "@mui/icons-material";
-import { Box, Typography, Divider, useTheme, IconButton } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Divider,
+  useTheme,
+  IconButton,
+  Button,
+} from "@mui/material";
 import UserImage from "components/UserImage";
 import FlexBetween from "components/FlexBetween";
 import WidgetWrapper from "components/WidgetWrapper";
@@ -22,19 +26,13 @@ const UserWidget = ({ friendId, userId, picturePath }) => {
   const [user, setUser] = useState(null);
   const { palette } = useTheme();
   const token = useSelector((state) => state.token);
-  const ufriends = useSelector((state) => state.user.friends);
-  const primaryLight = palette.primary.light;
-  const primaryDark = palette.primary.dark;
   const dark = palette.neutral.dark;
   const medium = palette.neutral.medium;
   const main = palette.neutral.main;
 
-
-  const isFriend = ufriends.find((friend) => friend._id === friendId);
-
   const patchFriend = async () => {
     const response = await fetch(
-      `http://localhost:3001/users/${_id}/${friendId}`,
+      `http://localhost:3001/users/${_id}/${userId}`,
       {
         method: "PATCH",
         headers: {
@@ -46,7 +44,6 @@ const UserWidget = ({ friendId, userId, picturePath }) => {
     const data = await response.json();
     dispatch(setFriends({ ufriends: data }));
   };
-
 
   const getUser = async () => {
     const response = await fetch(`http://localhost:3001/users/${userId}`, {
@@ -74,7 +71,8 @@ const UserWidget = ({ friendId, userId, picturePath }) => {
     impressions,
     friends,
   } = user;
-    
+
+  const isFriend = friends.find((friend) => friend._id !== userId);
 
   return (
     <WidgetWrapper>
@@ -102,18 +100,46 @@ const UserWidget = ({ friendId, userId, picturePath }) => {
         <FlexBetween gap="1rem">
           {/* <ManageAccountsOutlined /> */}
           {userId !== _id ? (
-            <IconButton
-              onClick={() => patchFriend()}
-              sx={{ backgroundColor: primaryLight, p: "0.6rem" }}
-            >
+            <IconButton onClick={() => patchFriend()}>
               {isFriend ? (
-                <PersonRemoveOutlined sx={{ color: primaryDark }} />
+                // <PersonRemoveOutlined sx={{ color: primaryDark }} />
+                <Button
+                  variant="outlined"
+                  sx={{
+                    color: palette.background.text,
+                    backgroundColor: palette.primary.bg,
+                    borderRadius: "3rem",
+                    borderColor: palette.background.text,
+                  }}
+                >
+                  Following
+                </Button>
               ) : (
-                <PersonAddOutlined sx={{ color: primaryDark }} />
+                // <PersonAddOutlined sx={{ color: primaryDark }} />
+                <Button
+                  variant="outlined"
+                  sx={{
+                    color: palette.background.text,
+                    backgroundColor: palette.primary.bg,
+                    borderRadius: "3rem",
+                  }}
+                >
+                  Follow
+                </Button>
               )}
             </IconButton>
           ) : (
-            <Typography>My Profile</Typography>
+            <Button
+              variant="outlined"
+              sx={{
+                color: palette.background.text,
+                backgroundColor: palette.primary.bg,
+                borderRadius: "3rem",
+                borderColor: palette.background.text,
+              }}
+            >
+              Edit Profile
+            </Button>
           )}
         </FlexBetween>
       </FlexBetween>

@@ -26,6 +26,7 @@ export const colorTokens = {
     700: "#006B7D",
     800: "#00353F",
     900: "#001519",
+    1000: "#000000",
   },
 };
 
@@ -41,6 +42,7 @@ export const themeSettings = (mode) => {
               dark: colorTokens.primary[200],
               main: colorTokens.primary[500],
               light: colorTokens.primary[800],
+              bg: colorTokens.primary[0],
             },
             neutral: {
               dark: colorTokens.grey[100],
@@ -52,6 +54,7 @@ export const themeSettings = (mode) => {
             background: {
               default: colorTokens.grey[900],
               alt: colorTokens.grey[800],
+              text: colorTokens.grey[50],
             },
           }
         : {
@@ -60,6 +63,7 @@ export const themeSettings = (mode) => {
               dark: colorTokens.primary[700],
               main: colorTokens.primary[500],
               light: colorTokens.primary[50],
+              bg: colorTokens.primary[0],
             },
             neutral: {
               dark: colorTokens.grey[700],
@@ -71,6 +75,7 @@ export const themeSettings = (mode) => {
             background: {
               default: colorTokens.grey[10],
               alt: colorTokens.grey[0],
+              text: colorTokens.grey[1000],
             },
           }),
     },
