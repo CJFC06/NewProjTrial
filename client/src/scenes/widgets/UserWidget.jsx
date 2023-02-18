@@ -10,14 +10,28 @@ import {
   useTheme,
   IconButton,
   Button,
+  Modal,
+  TextField,
 } from "@mui/material";
 import UserImage from "components/UserImage";
 import FlexBetween from "components/FlexBetween";
 import WidgetWrapper from "components/WidgetWrapper";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { setFriends } from "state";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  boxShadow: 24,
+  p: 4,
+  borderRadius: "1rem",
+};
 
 const UserWidget = ({ friendId, userId, picturePath }) => {
   const dispatch = useDispatch();
@@ -29,6 +43,10 @@ const UserWidget = ({ friendId, userId, picturePath }) => {
   const dark = palette.neutral.dark;
   const medium = palette.neutral.medium;
   const main = palette.neutral.main;
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpenEditProfile = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const patchFriend = async () => {
     const response = await fetch(
@@ -137,10 +155,65 @@ const UserWidget = ({ friendId, userId, picturePath }) => {
                 borderRadius: "3rem",
                 borderColor: palette.background.text,
               }}
+              onClick={handleOpenEditProfile}
             >
               Edit Profile
             </Button>
           )}
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style} justifyContent="flex-end">
+              <Typography id="modal-modal-title" variant="h6" component="h2">
+                Edit Profile
+              </Typography>
+              <TextField
+                id="outlined-basic"
+                label="First name"
+                variant="outlined"
+                sx={{ marginTop: "1rem" }}
+                fullWidth
+              />
+              <TextField
+                id="outlined-basic"
+                label="Last name"
+                variant="outlined"
+                sx={{ marginTop: "1rem" }}
+                fullWidth
+              />
+              <TextField
+                id="outlined-basic"
+                label="Location"
+                variant="outlined"
+                sx={{ marginTop: "1rem" }}
+                fullWidth
+              />
+              <TextField
+                id="outlined-basic"
+                label="Occupation"
+                variant="outlined"
+                sx={{ marginTop: "1rem" }}
+                fullWidth
+              />
+              <Button
+                variant="contained"
+                sx={{
+                  color: palette.background.text,
+                  backgroundColor: palette.primary.bg,
+                  borderRadius: "3rem",
+                  borderColor: palette.background.text,
+                  marginTop: "1rem",
+                }}
+                onClick={handleOpenEditProfile}
+                fullWidth
+              >
+                Save
+              </Button>
+            </Box>
+          </Modal>
         </FlexBetween>
       </FlexBetween>
 
